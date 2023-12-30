@@ -1,24 +1,58 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import ImgEditable from "./components/ImgEditable";
+import ButtonsEdit from "./components/ButtonsEdit";
+import {useState} from "react";
+
+
+
+const IMG_EDIT = {
+  accessories: "headphone.png",
+  backgrounds: "blue50.png",
+  ears: "default.png",
+  eyes: "default.png",
+  hair: "default.png",
+  leg: "cookie.png",
+  mouth: "default.png",
+  neck: "default.png",
+  noses: "nose.png",
+}
 
 function App() {
+
+  const [imgOptions ,setImgOptions] = useState(IMG_EDIT);
+  const [optionStyle, setOptionStyle] = useState('eyes')
+
+  function handleOption(option){
+    setOptionStyle(() => option);
+  }
+
+  function handleStyle(style){
+    setImgOptions(prevState => {
+      return {
+        ...prevState,
+        [optionStyle]: style
+      }
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className={'container'}>
+      <div className="row">
+        {/*Header*/}
+        <Header/>
+        <div className="col-6 d-flex flex-column">
+          {/*Img*/}
+          <ImgEditable imgOptions={imgOptions}/>
+          {/*Buttons*/}
+          <p>Coming soon...</p>
+        </div>
+        <div className="col-6">
+          {/*Buttons*/}
+          <ButtonsEdit handleOption={handleOption} handleStyle={handleStyle} option={optionStyle}/>
+        </div>
+      </div>
+    </section>
   );
 }
 
